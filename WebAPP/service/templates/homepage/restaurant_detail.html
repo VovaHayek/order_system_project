@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ object.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail_restaurant.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div class="restaurant-detail-container">
+        {% include 'includes/header.html' %}
+        <div class="restaurant-detail-background"><img src="{{ object.logo.url }}" class="restaurant-detail-background-image"></div>
+
+        <div class="restaurant-detail-baner-container">
+            <h1 class="restaurant-detail-baner-title">{{ object.name }}</h1>
+            <h2 class="restaurant-detail-baner-description">{{ object.description }}</h2>
+        </div>
+
+        <!--Main menu for adding food to cart-->
+        <div class="restaurant-detail-menu-container">
+            <h1 style="font-family: 'Fredoka', sans-serif;">MENU</h1>
+            {% for food in restaurant_food %}
+            <!--Displaying every dish in menu-->
+                <div class="restaurant-detail-menu-dish">
+                    <div>
+                        <h2 class="restaurant-detail-menu-food-name" style="font-family: sans-serif;">{{ food.pk }}. {{food.name_of_food}}</h2>
+                        <p class="restaurant-detail-menu-food-price">USD {{ food.price }}.00</p>
+                        <button class="restaurant-detail-menu-cart-add-button" id="{{ food.pk }}" value="{{ food.pk }} {{ food.name_of_food }} {{ food.price }}" onclick="addToCart(this)">Add to cart</button>
+                    </div>
+                    <img src="{{ food.dish_image.url }}" class="restaurant-detail-menu-food-image">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button class="food-detail-show-cart-button" id="show-cart-button" onclick="openCart()">Show cart</button> <!--Button for opening a cart for ordering food-->
+   
+    <div class="restaurant-detail-food-cart-background hide-modal" id="modal-window"> <!--Modal window container-->
+        
+        <button class="restaurant-detail-food-cart-close-button" onclick="hideCart()">Close Cart</button> <!--Button for closing a cart modal window-->
+        <div class="restaurant-detail-food-cart-container">
+            <h1 style="font-family: 'Fredoka', sans-serif; border-bottom: 1px solid #aaa;">Dishes</h1>
+            <div class="restaurant-detail-food-cart-dishes" id="food-cart"></div> <!--Container for adding a dishes that client wants to order-->
+            <div class="restaurant-detail-food-cart-amount-container" id="amount"></div> <!--Container for displaying an amount of price of all dishes in cart-->
+            <button class="restaurant-detail-food-cart-submit-order-button">Submit Order</button> <!--Button for ordering food-->
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
+</body>
+</html>

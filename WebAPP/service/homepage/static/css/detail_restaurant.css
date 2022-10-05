@@ -1,0 +1,235 @@
+body {
+    overflow-x: hidden;
+}
+
+.restaurant-detail-container {
+    width: 100vw;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Big image in background */
+.restaurant-detail-background {
+    background-color: #000;
+    width: 102vw;
+    max-height: 75vh;
+    position: absolute;
+    left: -1%;
+    top: 0;
+    overflow: hidden;
+}
+
+.restaurant-detail-background-image {
+    width: 100%;
+    height: auto;
+    margin-top: -10%;
+    z-index: 0;
+    filter: blur(1.5px);
+    opacity: 0.8;
+}
+
+/*Updating header menu outside of main page*/
+.header-container {
+    color: #fff;
+    border-bottom: none;
+}
+
+.header-search-bar::placeholder {
+    color: #fff;
+}
+
+/* Designing main banner title of the restaurant */
+.restaurant-detail-baner-container {
+    width: 80%;
+    z-index: 1;
+    margin-top: 5%;
+    padding-top: 5%;
+}
+
+.restaurant-detail-baner-title {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 5rem;
+    color: #eee;
+    text-shadow: 0 0 3px #000;
+}
+
+.restaurant-detail-baner-description {
+    font-family: sans-serif;
+    color: #ddd;
+    text-shadow: 0 0 3px #000;
+}
+
+/*Decorating restaurant's menu*/
+.restaurant-detail-menu-container {
+    background-color: #fff;
+    box-shadow: 0px 1px 5px 0 #333;
+    width: 60%;
+    margin-top: 5%;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+/*Each dish in menu*/
+.restaurant-detail-menu-dish {
+    width: 90%;
+    height: 20vh;
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.restaurant-detail-menu-food-image {
+    max-width: 30%;
+    max-height: 80%;
+}
+
+.restaurant-detail-menu-food-price {
+    font-family: sans-serif;
+    color: rgb(0, 162, 255);
+    text-shadow: 0 0 2px #000;
+}
+
+.restaurant-detail-menu-cart-add-button {
+    background-color: #47B5FF;
+    margin-top: 31%;
+    border-radius: 5px;
+    border: none;
+    height: 5vh;
+    width: 6vw;
+    transition: .3s ease-in-out;
+}
+.restaurant-detail-menu-cart-add-button:hover {
+    background-color: #73c7ff;
+    cursor: pointer;
+}
+
+
+/*DESIGNING CART*/
+
+/*Button for showing cart*/
+.food-detail-show-cart-button {
+    box-shadow: 1px 1px 6px 1px #000;
+    background-color: #47B5FF;
+    width: 17vw;
+    height: 5vh;
+    border-radius: 10px;
+    border: none;
+    position: fixed;
+    bottom: 3%;
+    right: 1%;
+    opacity: 0;
+    visibility: hidden;
+    transition: .3s ease-in-out;
+}
+.food-detail-show-cart-button:hover {
+    background-color: #64c1ff;
+    cursor: pointer;
+}
+.show {
+    opacity: 100%;
+    visibility: visible;
+}
+
+/*Main food cart*/
+.restaurant-detail-food-cart-background {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgba(100, 100, 100, 0.7);
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.hide-modal {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/*Designing button for closing modal window*/
+.restaurant-detail-food-cart-close-button {
+    background-color:rgb(0, 162, 255);
+    font-family: sans-serif;
+    font-weight: bold;
+    width: 20%;
+    height: 5%;
+    margin: 1%;
+    border: none;
+    border-radius: 5px;
+    transition: .3s linear;
+}
+.restaurant-detail-food-cart-close-button:hover {
+    background-color:rgb(255, 85, 0);
+    cursor: pointer;
+}
+
+/*Main food container in modal window*/
+.restaurant-detail-food-cart-container {
+    background-color: #fff;
+    width: 40%;
+    height: 85%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.restaurant-detail-food-cart-dishes {
+    width: 99%;
+    height: auto;
+    max-height: 80%;  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order-dish {
+    width: 99%;
+    height: 50px;
+    margin: 1%;
+    border-bottom: 1px dashed #aaa;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.order-dish > h2 {
+    font-family: sans-serif;
+}
+
+/*Amount of order*/
+.restaurant-detail-food-cart-amount-container {
+    position: absolute;
+    top: 85%;
+}
+.amount {
+    font-family: sans-serif;
+}
+
+/*Order submit button*/
+.restaurant-detail-food-cart-submit-order-button {
+    background-color: #47B5FF;
+    width: 94%;
+    height: 5%;
+    border: none;
+    border-radius: 3px;
+    margin: 3%;
+    margin-top: auto;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+.restaurant-detail-food-cart-submit-order-button:hover {
+    background-color: #6cc3fd;
+}
