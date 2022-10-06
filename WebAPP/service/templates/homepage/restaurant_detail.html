@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
+    {% csrf_token %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,7 +34,7 @@
                     <div>
                         <h2 class="restaurant-detail-menu-food-name" style="font-family: sans-serif;">{{ food.pk }}. {{food.name_of_food}}</h2>
                         <p class="restaurant-detail-menu-food-price">USD {{ food.price }}.00</p>
-                        <button class="restaurant-detail-menu-cart-add-button" id="{{ food.pk }}" value="{{ food.pk }} {{ food.name_of_food }} {{ food.price }}" onclick="addToCart(this)">Add to cart</button>
+                        <button class="restaurant-detail-menu-cart-add-button" id="{{ food.pk }}" value="{{ food.pk }},{{ food.name_of_food }},{{ food.price }}" onclick="addToCart(this)">Add to cart</button>
                     </div>
                     <img src="{{ food.dish_image.url }}" class="restaurant-detail-menu-food-image">
                 </div>
@@ -50,7 +51,7 @@
             <h1 style="font-family: 'Fredoka', sans-serif; border-bottom: 1px solid #aaa;">Dishes</h1>
             <div class="restaurant-detail-food-cart-dishes" id="food-cart"></div> <!--Container for adding a dishes that client wants to order-->
             <div class="restaurant-detail-food-cart-amount-container" id="amount"></div> <!--Container for displaying an amount of price of all dishes in cart-->
-            <button class="restaurant-detail-food-cart-submit-order-button">Submit Order</button> <!--Button for ordering food-->
+            <button class="restaurant-detail-food-cart-submit-order-button" value="{{object.pk}}" onclick="createOrder(this)">Submit Order</button> <!--Button for ordering food-->
         </div>
 
     </div>

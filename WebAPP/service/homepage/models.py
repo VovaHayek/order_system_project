@@ -20,6 +20,7 @@ class Food(models.Model):
 class Order(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     dishes = models.ManyToManyField(Food, blank=False)
+    amount = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return self.restaurant
+        return self.restaurant.name

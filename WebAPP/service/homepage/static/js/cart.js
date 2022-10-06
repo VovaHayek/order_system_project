@@ -22,8 +22,8 @@ function changeButtonOptions(button, action) {
 }
 
 function addToCart(e) {
-    const food = e.value.split(' ');
-    foodID.push(food[0]);
+    const food = e.value.split(',');
+    foodID.push(parseInt(food[0]));
     foodName.push(food[1]);
     foodPrice.push(food[2]);
 
@@ -35,4 +35,20 @@ function addToCart(e) {
     
     sum = sum + parseInt(food[2]);
     $("#amount").html('<h2 class="amount">Amount: $' + sum + "</h2>");
+}
+
+function createOrder(e){
+    $.ajax({
+        method: 'POST',
+        url: '/restaurant/' + e.value + '/',
+        data: {
+            restaurant: parseInt(e.value),
+            food: foodID,
+            amount: sum,
+            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+        },
+        success: function(){
+            location.reload();
+        }
+    })  
 }
