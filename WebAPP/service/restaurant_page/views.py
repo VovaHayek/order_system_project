@@ -18,7 +18,6 @@ class RestaurantDetailView(DetailView):
             order_restaurant = request.POST.get('restaurant')
             order_dishes = request.POST.getlist('food[]')
             order_amount = request.POST.get('amount')
-            print(order_restaurant + ' //////////////////////////////')
             if order_restaurant and order_dishes and order_amount:
                 order = Order.objects.create(restaurant_id=order_restaurant)
                 order.dishes.set([eval(i) for i in order_dishes])
