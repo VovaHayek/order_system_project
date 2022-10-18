@@ -2,10 +2,11 @@ import requests
 from tkinter import *
 
 app = Tk()
-response = requests.get('http://127.0.0.1:8000/get-order-data/')
+rest_name = 'mcdonalds'
+response = requests.get(f'http://127.0.0.1:8000/get-order-data?restaurant={rest_name}')
 
 def change_text():
-    response = requests.get('http://127.0.0.1:8000/get-order-data/')
+    response = requests.get(f'http://127.0.0.1:8000/get-order-data?restaurant={rest_name}')
     text.config(text=response.json())
     app.after(1000, change_text)
 
