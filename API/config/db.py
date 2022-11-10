@@ -21,15 +21,15 @@ def get_data_from_database(restaurant_name):
             order_db_data = cursor.fetchall()
 
             get_order_menu_data = connection.cursor()
-            cursor.execute(f'select homepage_order_dishes.order_id, homepage_order_dishes.food_id from homepage_order_dishes inner join homepage_restaurant inner join homepage_order on homepage_order_dishes.order_id = homepage_order.id and homepage_order.restaurant_id = homepage_restaurant.id where homepage_restaurant.name = \'{restaurant_name}\';')
+            cursor.execute(f'select homepage_order_dishes.order_id, homepage_order_dishes.food_id, homepage_food.name_of_food from homepage_order_dishes inner join homepage_food on homepage_order_dishes.food_id = homepage_food.id inner join homepage_restaurant inner join homepage_order on homepage_order_dishes.order_id = homepage_order.id and homepage_order.restaurant_id = homepage_restaurant.id where homepage_restaurant.name = \'{restaurant_name}\';')
             order_dish_db_data = cursor.fetchall()
 
             for index, restaurant_id, amount in order_db_data:
                 data[index] = {'restaurant': restaurant_id}
                 data[index].update({'amount': amount})
                 data[index].update({'menu': []})
-            for order_id, food_id in order_dish_db_data:
-                data[order_id]['menu'].append(food_id)
+            for order_id, food_id, food_name in order_dish_db_data:
+                data[order_id]['menu'].append(food_name)
 
             return data
 
