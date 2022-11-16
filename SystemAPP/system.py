@@ -9,9 +9,12 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QHeaderView
+from PyQt5.QtCore import Qt, QTimer
 
+import schedule
 import requests
+import time
 
 class DictionaryTableModel(QtCore.QAbstractTableModel):
     def __init__(self, data, headers):
@@ -25,7 +28,7 @@ class DictionaryTableModel(QtCore.QAbstractTableModel):
             column = index.column()
             column_key = self._headers[column]
             if column_key == 'menu':
-                menu = ' '.join(self._data[index.row()][column_key])
+                menu = ', '.join(self._data[index.row()][column_key])
                 return menu
             return self._data[index.row()][column_key]
 
@@ -53,6 +56,7 @@ class Ui_MainWindow(object):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
         MainWindow.resize(1001, 701)
+        MainWindow.showMaximized()
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
@@ -63,6 +67,7 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.frame = QtWidgets.QFrame(self.centralwidget)
         self.frame.setGeometry(QtCore.QRect(25, 100, 950, 550))
+        self.frame.adjustSize()
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -78,11 +83,13 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        self.rest_name = ''
         self.l = []
-        self.response = requests.get('http://127.0.0.1:8000/get-order-data?restaurant=McDonalds')
-        for index, data in self.response.json().items():
-            self.l.append(data)
         self.headers = ['restaurant', 'amount', 'menu']
+
+        self.timer=QTimer()
+        self.timer.timeout.connect(self.update_data_in_table)
+        self.timer.start(10000)
 
         self.show_rest_name()
 
@@ -98,12 +105,28 @@ class Ui_MainWindow(object):
         self.pushButton.clicked.connect(lambda: self.show_restaurant(self.lineEdit.text()))
 
     def show_restaurant(self, rest):
-        print(self.l)
+        self.l = []
+        self.rest_name = rest
+        self.response = requests.get(f'http://127.0.0.1:8000/get-order-data?restaurant={self.rest_name}')
+        for index, data in self.response.json().items():
+            self.l.append(data)       
         self.model = DictionaryTableModel(self.l, self.headers)
         self.tableView.setModel(self.model)
-        self.tableView.setColumnWidth(0, 250)
-        self.tableView.setColumnWidth(2, 550)
+        self.tableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
  
+    def update_data_in_table(self):
+        self.l = []
+        self.response = requests.get(f'http://127.0.0.1:8000/get-order-data?restaurant={self.rest_name}')
+        for index, data in self.response.json().items():
+            self.l.append(data)
+        self.model = DictionaryTableModel(self.l, self.headers)
+        self.tableView.setModel(self.model)
+        self.tableView.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        self.tableView.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
+
 
 if __name__ == "__main__":
     import sys
