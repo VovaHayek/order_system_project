@@ -1,0 +1,13 @@
+<div class="restaurants-container" id="restaurants">
+    {% for restaurant in restaurants %}
+        <div class="restaurant" onclick="location.href='/restaurant/{{restaurant.id}}'">
+            <div class="restaurant-logo-container">
+                <img src="{{ restaurant.logo.url }}" class="restaurant-logo">
+            </div>
+            <div class="restaurant-info">
+                <h1 class="restaurant-title">{{ restaurant.name }}</h1>
+                <p class="restaurant-description">{{ restaurant.description }}</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>

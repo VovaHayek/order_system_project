@@ -9,7 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QHeaderView
+from PyQt5.QtWidgets import QHeaderView, QSizePolicy, QDesktopWidget
 from PyQt5.QtCore import Qt, QTimer
 
 import schedule
@@ -57,23 +57,26 @@ class Ui_MainWindow(object):
         MainWindow.setEnabled(True)
         MainWindow.resize(1001, 701)
         MainWindow.showMaximized()
+        self.g = QDesktopWidget().availableGeometry()
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(400, 10, 200, 30))
+        self.lineEdit.setGeometry(QtCore.QRect(int(self.g.width()/2)-200, self.g.height()-(self.g.height()-10), 400, 30))
         self.lineEdit.setObjectName("lineEdit")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(450, 50, 100, 30))
+        self.pushButton.setGeometry(QtCore.QRect(int(self.g.width()/2)-50, self.g.height()-(self.g.height()-50), 100, 30))
         self.pushButton.setObjectName("pushButton")
         self.frame = QtWidgets.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(25, 100, 950, 550))
-        self.frame.adjustSize()
+        self.frame.setGeometry(QtCore.QRect(25, 100, self.g.width()-200, self.g.height()-200))
+        #self.frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.frame.move(100, 100)
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.tableView = QtWidgets.QTableView(self.frame)
-        self.tableView.setGeometry(QtCore.QRect(0, 0, 950, 550))
+        self.tableView.setGeometry(QtCore.QRect(0, 0, self.g.width()-200, self.g.height()-200))
         self.tableView.setObjectName("tableView")
+        self.tableView.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1001, 21))
