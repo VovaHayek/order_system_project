@@ -59,3 +59,15 @@ body {
     font-family: sans-serif;
     color: #666;
 }
+
+/*Optimization for phone screens*/
+@media screen and (max-width: 900px) {
+    .restaurant {
+        width: 48%;
+        height: 25vh;
+    }
+
+    .restaurant-title {
+        font-size: 19px;
+    }
+}

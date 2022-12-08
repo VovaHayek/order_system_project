@@ -79,3 +79,13 @@
 .header-signup-url:hover {
     background-color: #a6d973;
 }
+
+@media screen and (max-width: 900px) {
+    .header-search-container {
+        width: 30%;
+    }
+
+    .header-links {
+        width: 30%;
+    }
+}
